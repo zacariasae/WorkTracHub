@@ -1,0 +1,3 @@
+# Use LF line endings for all text files (Mac/Windows compatibility)
+* text=auto eol=lf
+*.bat text eol=crlf
