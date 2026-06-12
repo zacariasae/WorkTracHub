@@ -404,6 +404,8 @@ public class AdminPanel extends JPanel {
         JPanel buttonPanel = new JPanel(new FlowLayout());
         JButton addButton = new JButton("Add");
         JButton deactivateButton = new JButton("Deactivate");
+        JButton reactivateButton = new JButton("Reactivate");
+        reactivateButton.setVisible(false);
 
         addButton.addActionListener(e -> {
             String name = userNameField.getText().trim();
@@ -440,8 +442,37 @@ public class AdminPanel extends JPanel {
             loadUsers(userTableModel);
         });
 
+        reactivateButton.addActionListener(e -> {
+            int selectedRow = userTable.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(null, "Please select a user");
+                return;
+            }
+            int id = (int) userTableModel.getValueAt(selectedRow, 0);
+            userService.reactivateUser(id);
+            loadUsers(userTableModel);
+        });
+
+        userTable.getSelectionModel().addListSelectionListener(e -> {
+            int selectedRow = userTable.getSelectedRow();
+            if (selectedRow == -1) {
+                deactivateButton.setVisible(true);
+                reactivateButton.setVisible(false);
+                return;
+            }
+            String active = (String) userTableModel.getValueAt(selectedRow, 4);
+            if (active.equals("Yes")) {
+                deactivateButton.setVisible(true);
+                reactivateButton.setVisible(false);
+            } else {
+                deactivateButton.setVisible(false);
+                reactivateButton.setVisible(true);
+            }
+        });
+
         buttonPanel.add(addButton);
         buttonPanel.add(deactivateButton);
+        buttonPanel.add(reactivateButton);
 
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.add(formUsersPanel, BorderLayout.CENTER);

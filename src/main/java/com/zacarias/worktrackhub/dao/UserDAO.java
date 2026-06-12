@@ -107,6 +107,18 @@ public class UserDAO {
         }
     }
 
+    public void reactivate(int id) {
+
+        String sqlUpdate = "UPDATE users SET active = 1 where id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlUpdate)) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error enabling user: " + e.getMessage());
+        }
+    }
+
     private User mapUser(ResultSet resultSet) throws SQLException {
         return new User(
                 resultSet.getInt("id"),

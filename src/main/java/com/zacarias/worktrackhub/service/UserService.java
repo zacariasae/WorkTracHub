@@ -45,4 +45,8 @@ public class UserService {
     public void deactivateUser(int id) {
         userDAO.deactivate(id);
     }
+
+    public void reactivateUser(int id) {
+        userDAO.reactivate(id);
+    }
 }
