@@ -32,6 +32,8 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+        ImageIcon icon = new ImageIcon(getClass().getResource("/workTrackHubLogo.png"));
+        setIconImage(icon.getImage());
     }
 
     private void showLoginPanel() {
